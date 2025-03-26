@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
   mysqldb:
-    container_name: mysqldb
+    container_name: mysql_container
     image: mysql:8.0
     volumes:
-      - /home/user/Desktop/db:/var/lib/mysql
+      - /var/lib/docker/volumes/87b0991257035c8f1267c65c2a2355d6d44ff15b3705bf1f2c1cad61e0ad8159/_data
     ports:
       - 3306:3306
     environment:
