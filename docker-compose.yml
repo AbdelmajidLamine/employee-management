@@ -24,7 +24,7 @@ services:
     depends_on:
       - mysqldb
     ports:
-      - "8085:8085"
+      - "8081:8081"
     networks:
       - app-network
 
