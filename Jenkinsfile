@@ -1,6 +1,14 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'maven3' // défini dans Jenkins > Global Tool Configuration
+    }
+
+    environment {
+        DOCKER_IMAGE = 'employee-management:latest'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,31 +16,37 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Start MySQL with Docker Compose') {
             steps {
-                bat 'mvn clean package -DskipTests' // Add -DskipTests if you want faster builds
+                bat 'docker-compose up -d mysqldb'
             }
         }
 
-        stage('Test') {
+        stage('Build with Maven') {
             steps {
-                bat 'mvn test'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
-        stage('Run') {
+        stage('Build Docker Image') {
             steps {
-                bat 'java -jar target/*.jar' // Or specify the exact jar name
+                bat 'docker build -t %DOCKER_IMAGE% .'
+            }
+        }
+
+        stage('Run Application Container') {
+            steps {
+                bat 'docker-compose up -d employee-management'
             }
         }
     }
 
     post {
         success {
-            echo 'Build and Run Successful!'
+            echo '✅ Application buildée, dockerisée et lancée avec succès !'
         }
         failure {
-            echo 'Build failed!'
+            echo '❌ Échec du pipeline.'
         }
     }
 }
