@@ -1,15 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3.8.1' // Make sure Maven is configured in Jenkins under Global Tool Configuration
-        jdk 'Java 17' // Use the JDK version your Spring Boot app needs
-    }
-
-    environment {
-        // Set any environment variables if needed
-    }
-
     stages {
         stage('Checkout') {
             steps {
