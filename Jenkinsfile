@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'maven3' // défini dans Jenkins > Global Tool Configuration
-    }
-
     environment {
         DOCKER_IMAGE = 'employee-management:latest'
     }
