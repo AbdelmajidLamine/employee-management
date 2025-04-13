@@ -10,19 +10,19 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests' // Add -DskipTests if you want faster builds
+                bat 'mvn clean package -DskipTests' // Add -DskipTests if you want faster builds
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('Run') {
             steps {
-                sh 'java -jar target/*.jar' // Or specify the exact jar name
+                bat 'java -jar target/*.jar' // Or specify the exact jar name
             }
         }
     }
